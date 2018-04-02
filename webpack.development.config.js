@@ -47,7 +47,7 @@ const config = {
     new HTMLWebpackPlugin({
       hash: true,
       template: './src/index.html',
-      title: 'Project Title',
+      title: 'Marvel History v2.0',
     }),
   ],
   devServer: {
