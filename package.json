@@ -1,7 +1,7 @@
 {
-  "name": "webpack4-boilerplate",
-  "version": "1.0.0",
-  "description": "Simple boilerplate for projects using Webpack 4 and some neato plugins",
+  "name": "marvel-history",
+  "version": "2.0.0",
+  "description": "Face Front, True Believers!",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.development.config.js",
@@ -11,6 +11,7 @@
   "author": "J Lincoln Dennis",
   "license": "ISC",
   "devDependencies": {
+    "angular": "^1.6.9",
     "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
@@ -30,5 +31,10 @@
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "angular": "^1.6.9",
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1",
+    "md5": "^2.2.1"
+  }
 }
