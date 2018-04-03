@@ -5,6 +5,17 @@ const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 
 const config = {
   mode: 'production',
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.scss', '.css', '.jpeg', '.jpg', '.png', '.gif'],
     alias: {
@@ -35,7 +46,7 @@ const config = {
               ident: 'postcss',
               plugins: loader => [
                 require('autoprefixer')(),
-              ]
+              ],
             }
           },
         ],
