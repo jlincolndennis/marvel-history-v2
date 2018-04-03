@@ -19,6 +19,11 @@ const config = {
         use: { loader: 'babel-loader' },
       },
       {
+        test: /\.html$/,
+        loader: 'html-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,

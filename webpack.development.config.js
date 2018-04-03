@@ -17,6 +17,11 @@ const config = {
         use: { loader: 'babel-loader' },
       },
       {
+        test: /\.html$/,
+        loader: 'html-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.scss$/,
         use: [
           'style-loader',
@@ -47,7 +52,6 @@ const config = {
     new HTMLWebpackPlugin({
       hash: true,
       template: './src/index.html',
-      title: 'Marvel History v2.0',
     }),
   ],
   devServer: {
