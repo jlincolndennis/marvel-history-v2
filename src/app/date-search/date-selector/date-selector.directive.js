@@ -16,33 +16,34 @@ class DateSelectorController {
   constructor() {
     const today = new Date();
     this.currentMonth = today.getMonth();
-    this.currentYear = today.getYear();
+    this.currentYear = today.getFullYear();
     this.currentDate = today.getDate();
     this.months = [
-      { MM: '01', name: 'January' },
-      { MM: '02', name: 'February' },
-      { MM: '03', name: 'March' },
-      { MM: '04', name: 'April' },
-      { MM: '05', name: 'May' },
-      { MM: '06', name: 'June' },
-      { MM: '07', name: 'July' },
-      { MM: '08', name: 'August' },
-      { MM: '09', name: 'September' },
-      { MM: '10', name: 'October' },
-      { MM: '11', name: 'November' },
-      { MM: '12', name: 'December' },
+      { MM: 1, name: 'January' },
+      { MM: 2, name: 'February' },
+      { MM: 3, name: 'March' },
+      { MM: 4, name: 'April' },
+      { MM: 5, name: 'May' },
+      { MM: 6, name: 'June' },
+      { MM: 7, name: 'July' },
+      { MM: 8, name: 'August' },
+      { MM: 9, name: 'September' },
+      { MM: 10, name: 'October' },
+      { MM: 11, name: 'November' },
+      { MM: 12, name: 'December' },
     ];
     this.selectedMonth = this.months[this.currentMonth];
     this.days = this.getDaysInMonth(this.selectedMonth, this.currentYear);
-    this.selectedDay = this.currentDate;
+    this.selectedDate = this.currentDate;
   }
 
   setDaysByMonth(month) {
     this.days = this.getDaysInMonth(month, this.currentYear);
+    this.selectedDate = 1;
   }
 
   getDaysInMonth(monthObj, year) {
-    const month = parseInt(monthObj.MM, 10) - 1;
+    const month = monthObj.MM - 1;
     const date = new Date(year, month, 1);
     const days = [];
 
@@ -52,6 +53,42 @@ class DateSelectorController {
     }
     return days;
   }
+
+  queryBuilder() {
+    let searchQuery = {};
+    const { MM } = this.selectedMonth;
+    const YYYY = this.currentYear;
+    const DD = this.selectedDate;
+    const NYE = new Date(YYYY, 11, 31).toDateString();
+    const weekStartDate = new Date(YYYY, MM - 1, DD);
+    const weekEndDate = oneWeekLater(weekStartDate);
+    const end = `${pad(weekEndDate.getMonth() + 1)}-${pad(weekEndDate.getDate())}`;
+    let start = '';
+
+    if (weekEndDate.toDateString() === NYE) {
+      start = '12-24';
+    } else {
+      start = `${pad(MM)}-${pad(DD)}`;
+    }
+    searchQuery = { start, end };
+    console.log(searchQuery);
+    return searchQuery;
+  }
 }
 
 export default dateSelectorDirective;
+
+function pad(num) {
+  let str = `${num}`;
+  if (str.length === 1) str = `0${str}`;
+  return str;
+}
+
+function oneWeekLater(startDate) {
+  const xmasEve = new Date(startDate.getFullYear(), 11, 24);
+  if (startDate > xmasEve) return new Date(startDate.getFullYear(), 11, 31);
+
+  const d = new Date(startDate);
+  d.setDate(d.getDate() + 7);
+  return d;
+}

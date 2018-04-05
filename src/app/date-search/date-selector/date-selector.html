@@ -10,7 +10,9 @@
 
     <select
       ng-options="day for day in ds.days"
-      ng-model="ds.selectedDay">
+      ng-model="ds.selectedDate">
     </select>
+
+    <button ng-click="ds.queryBuilder()">Search!</button>
 </form>
 </div>
