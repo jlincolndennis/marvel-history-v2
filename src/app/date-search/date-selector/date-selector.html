@@ -1,1 +1,18 @@
-<h1>Hello! I am Date Selector!</h1>
+<div class="date-selector">
+  <h2>Select a date to see notable comics released during that week from throughout over 75 years of Marvel history!</h2>
+
+  <form>
+    <select
+      ng-options="month.name for month in ds.months"
+      ng-model="ds.selectedMonth"
+      ng-change="ds.setDaysByMonth(ds.selectedMonth)">
+    </select>
+
+    <select
+      ng-options="day for day in ds.days"
+      ng-model="ds.selectedDate">
+    </select>
+
+    <button ng-click="ds.queryBuilder()">Search!</button>
+</form>
+</div>
