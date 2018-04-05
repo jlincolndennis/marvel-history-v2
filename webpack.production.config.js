@@ -47,7 +47,7 @@ const config = {
               plugins: loader => [
                 require('autoprefixer')(),
               ],
-            }
+            },
           },
         ],
       },
