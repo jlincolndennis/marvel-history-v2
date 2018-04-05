@@ -5,7 +5,14 @@ function dateSelectorDirective() {
     restrict: 'E',
     scope: {},
     template,
+    controller: DateSelectorController,
+    controllerAs: 'vm',
   };
+}
+
+// DateSelectorController.$inject = ['marvelService'];
+
+function DateSelectorController() {
 }
 
 export default dateSelectorDirective;
