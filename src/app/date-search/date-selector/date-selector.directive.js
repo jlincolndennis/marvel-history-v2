@@ -13,7 +13,8 @@ function dateSelectorDirective() {
 // DateSelectorController.$inject = ['marvelService'];
 
 class DateSelectorController {
-  constructor() {
+  constructor(marvelService) {
+    this.ms = marvelService;
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
@@ -35,6 +36,7 @@ class DateSelectorController {
     this.selectedMonth = this.months[this.currentMonth];
     this.days = this.getDaysInMonth(this.selectedMonth, this.currentYear);
     this.selectedDate = this.currentDate;
+    this.results = [];
   }
 
   setDaysByMonth(month) {
@@ -70,9 +72,19 @@ class DateSelectorController {
     } else {
       start = `${pad(MM)}-${pad(DD)}`;
     }
-    searchQuery = { start, end };
-    console.log(searchQuery);
+    searchQuery = { start, end, golden: true };
     return searchQuery;
+  }
+  submitQuery() {
+    const query = this.queryBuilder();
+    this.ms.getComicsByDateRange(query)
+      .then((data) => {
+        this.results = data;
+        console.log('SQ', this.results);
+      });
+  }
+  viewResults() {
+    console.log(this.results);
   }
 }
 
@@ -92,3 +104,5 @@ function oneWeekLater(startDate) {
   d.setDate(d.getDate() + 7);
   return d;
 }
+
+// Golden Tests: March 1, October 1

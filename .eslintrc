@@ -7,6 +7,8 @@
   },
   "plugins": ["html", "json"],
   "rules": {
+    "no-underscore-dangle": "off",
+    "func-names": "off",
     "class-methods-use-this": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "warn",
