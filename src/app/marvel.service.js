@@ -9,13 +9,15 @@ class MarvelService {
     this.baseUrl = 'https://gateway.marvel.com//v1/public/';
     this.goldenAgeResults = [];
   }
+
   getComicsByDateRange(query) {
     if (this.goldenAgeResults.length === 0) {
       return this.buildGoldenAge(query);
     }
     console.log('Did not have to build');
-    return this.$q(() => this.goldenAgeResults);
+    return this.$q((resolve, reject) => resolve(this.goldenAgeResults));
   }
+
   buildGoldenAge(query) {
     console.log('Building Golden Age Results');
     const { start, end } = query;
@@ -23,11 +25,11 @@ class MarvelService {
     const goldenEnd = '1955';
     return this.$http.get(this.buildDateCall(`${goldenStart}-${start}`, `${goldenEnd}-${end}`))
       .then((res) => {
-        console.log('Done building', res);
         this.goldenAgeResults = this.buildIssues(res.data.data.results);
         return this.goldenAgeResults;
       });
   }
+
   buildDateCall(date1, date2) {
     const timeStamp = new Date().getTime();
     const { PUB_KEY, PRIV_KEY } = credentials;
@@ -38,6 +40,7 @@ class MarvelService {
     const fullUrl = `${this.baseUrl}${callParams}${dateParams}${callAuth}`;
     return fullUrl;
   }
+
   buildIssues(issues) {
     const results = issues.map((issue) => {
       const pubCode = issue.dates[0].date;
@@ -53,9 +56,15 @@ class MarvelService {
         description: issue.description,
         pubYear,
         pubDate,
+        pubCode,
         image: imgUrl,
       };
     });
+    return results;
+  }
+
+  filterResults(date1, date2, toBeFiltered) {
+    const results = toBeFiltered.filter(issue => issue.pubDate >= date1 && issue.pubDate <= date2);
     return results;
   }
 }

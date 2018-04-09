@@ -10,7 +10,7 @@ function dateSelectorDirective() {
   };
 }
 
-// DateSelectorController.$inject = ['marvelService'];
+DateSelectorController.$inject = ['marvelService'];
 
 class DateSelectorController {
   constructor(marvelService) {
@@ -75,12 +75,13 @@ class DateSelectorController {
     searchQuery = { start, end, golden: true };
     return searchQuery;
   }
+
   submitQuery() {
+    this.results = [];
     const query = this.queryBuilder();
     this.ms.getComicsByDateRange(query)
-      .then((data) => {
-        this.results = data;
-        console.log('SQ', this.results);
+      .then((results) => {
+        this.results = this.ms.filterResults(query.start, query.end, results);
       });
   }
   viewResults() {
