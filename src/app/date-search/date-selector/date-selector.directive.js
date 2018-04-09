@@ -10,8 +10,6 @@ function dateSelectorDirective() {
   };
 }
 
-DateSelectorController.$inject = ['marvelService'];
-
 class DateSelectorController {
   constructor(marvelService) {
     this.ms = marvelService;
@@ -88,6 +86,8 @@ class DateSelectorController {
     console.log(this.results);
   }
 }
+
+DateSelectorController.$inject = ['marvelService'];
 
 export default dateSelectorDirective;
 
