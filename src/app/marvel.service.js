@@ -24,8 +24,8 @@ class MarvelService {
     return this.$http.get(this.buildDateCall(`${goldenStart}-${start}`, `${goldenEnd}-${end}`))
       .then((res) => {
         console.log('Done building', res);
-        this.goldenAgeResults = res;
-        return res;
+        this.goldenAgeResults = this.buildIssues(res.data.data.results);
+        return this.goldenAgeResults;
       });
   }
   buildDateCall(date1, date2) {
@@ -37,6 +37,26 @@ class MarvelService {
     const callAuth = `&apikey=${PUB_KEY}&ts=${timeStamp}&hash=${hash}`;
     const fullUrl = `${this.baseUrl}${callParams}${dateParams}${callAuth}`;
     return fullUrl;
+  }
+  buildIssues(issues) {
+    const results = issues.map((issue) => {
+      const pubCode = issue.dates[0].date;
+      const pubDate = pubCode.substr(5, 5);
+      const pubYear = pubCode.substr(0, 4);
+      const img = issue.images[0];
+      let imgUrl = null;
+      if (img) imgUrl = `${img.path}/portrait_incredible.${img.extension}`;
+
+      return {
+        title: issue.title,
+        url: issue.urls[0].url,
+        description: issue.description,
+        pubYear,
+        pubDate,
+        image: imgUrl,
+      };
+    });
+    return results;
   }
 }
 
