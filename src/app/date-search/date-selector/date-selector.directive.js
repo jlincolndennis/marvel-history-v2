@@ -11,8 +11,10 @@ function dateSelectorDirective() {
 }
 
 class DateSelectorController {
-  constructor(marvelService) {
-    this.ms = marvelService;
+  constructor(MarvelService) {
+    'ngInject';
+
+    this.ms = MarvelService;
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
@@ -86,8 +88,6 @@ class DateSelectorController {
     console.log(this.results);
   }
 }
-
-DateSelectorController.$inject = ['marvelService'];
 
 export default dateSelectorDirective;
 

@@ -3,6 +3,8 @@ import credentials from '../credentials.json';
 
 class MarvelService {
   constructor($http, $q) {
+    'ngInject';
+
     this.$http = $http;
     this.$q = $q;
     this.time = new Date().getTime();
@@ -60,6 +62,7 @@ class MarvelService {
         image: imgUrl,
       };
     });
+    console.log('Full Results', results);
     return results;
   }
 
@@ -68,16 +71,4 @@ class MarvelService {
     return results;
   }
 }
-
 export default MarvelService;
-
-// I want these dates from this age
-
-// see if we have results stored for that age
-// if we do, send them to be filtered
-// if we don't, go get them, then check again
-
-// take all the age's results
-// filter them by dates provided
-
-// send filtered results back
