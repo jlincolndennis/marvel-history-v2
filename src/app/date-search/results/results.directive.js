@@ -6,17 +6,20 @@ function resultsDirective() {
     scope: {},
     template,
     controller: ResultsController,
-    controllerAs: 'vm',
+    controllerAs: 'results',
   };
 }
 
-ResultsController.$inject = ['$log'];
+class ResultsController {
+  constructor(DataService) {
+    'ngInject';
 
-function ResultsController($log) {
-  const vm = this;
-  vm.test = ['a', 'b', 'c'];
-
-  $log.log('Hello From The ResultsController');
+    this.ds = DataService;
+    this.data = this.ds.data;
+  }
+  showResults() {
+    console.log('from resultsDirective', this.data);
+  }
 }
 
 export default resultsDirective;

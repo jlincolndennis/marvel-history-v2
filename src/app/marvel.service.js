@@ -3,6 +3,8 @@ import credentials from '../credentials.json';
 
 class MarvelService {
   constructor($http, $q) {
+    'ngInject';
+
     this.$http = $http;
     this.$q = $q;
     this.time = new Date().getTime();
@@ -42,10 +44,11 @@ class MarvelService {
   }
 
   buildIssues(issues) {
+    console.log('Raw Results', issues);
     const results = issues.map((issue) => {
-      const pubCode = issue.dates[0].date;
-      const pubDate = pubCode.substr(5, 5);
-      const pubYear = pubCode.substr(0, 4);
+      const pubDate = issue.dates[0].date;
+      const pubCode = pubDate.substr(5, 5);
+      const pubYear = pubDate.substr(0, 4);
       const img = issue.images[0];
       let imgUrl = null;
       if (img) imgUrl = `${img.path}/portrait_incredible.${img.extension}`;
@@ -55,29 +58,18 @@ class MarvelService {
         url: issue.urls[0].url,
         description: issue.description,
         pubYear,
-        pubDate,
         pubCode,
+        pubDate,
         image: imgUrl,
       };
     });
+    console.log('Full Results', results);
     return results;
   }
 
   filterResults(date1, date2, toBeFiltered) {
-    const results = toBeFiltered.filter(issue => issue.pubDate >= date1 && issue.pubDate <= date2);
+    const results = toBeFiltered.filter(issue => issue.pubCode >= date1 && issue.pubCode <= date2);
     return results;
   }
 }
-
 export default MarvelService;
-
-// I want these dates from this age
-
-// see if we have results stored for that age
-// if we do, send them to be filtered
-// if we don't, go get them, then check again
-
-// take all the age's results
-// filter them by dates provided
-
-// send filtered results back

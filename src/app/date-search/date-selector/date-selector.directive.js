@@ -11,8 +11,11 @@ function dateSelectorDirective() {
 }
 
 class DateSelectorController {
-  constructor(marvelService) {
-    this.ms = marvelService;
+  constructor(MarvelService, DataService) {
+    'ngInject';
+
+    this.ms = MarvelService;
+    this.ds = DataService;
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
@@ -79,15 +82,15 @@ class DateSelectorController {
     const query = this.queryBuilder();
     this.ms.getComicsByDateRange(query)
       .then((results) => {
-        this.results = this.ms.filterResults(query.start, query.end, results);
+        // this.results = this.ms.filterResults(query.start, query.end, results);
+        // this.ds.data = this.results;
+        this.ds.data = this.ms.filterResults(query.start, query.end, results);
       });
   }
   viewResults() {
-    console.log(this.results);
+    console.log('from the data service', this.ds.data);
   }
 }
-
-DateSelectorController.$inject = ['marvelService'];
 
 export default dateSelectorDirective;
 
