@@ -1,5 +1,6 @@
 
-  <h1>{{issue.title}}</h1>
+  <h2>{{issue.title}}</h2>
   <a href="{{issue.url}}">Link</a>
+  <p>Originally Released: {{issue.pubDate | date:'MMMM d, yyyy' : 'UTC'}}</p>
   <p>{{issue.description}}</p>
   <img ng-src="{{issue.image}}" alt="">

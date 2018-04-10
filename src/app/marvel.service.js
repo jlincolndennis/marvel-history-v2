@@ -44,10 +44,11 @@ class MarvelService {
   }
 
   buildIssues(issues) {
+    console.log('Raw Results', issues);
     const results = issues.map((issue) => {
-      const pubCode = issue.dates[0].date;
-      const pubDate = pubCode.substr(5, 5);
-      const pubYear = pubCode.substr(0, 4);
+      const pubDate = issue.dates[0].date;
+      const pubCode = pubDate.substr(5, 5);
+      const pubYear = pubDate.substr(0, 4);
       const img = issue.images[0];
       let imgUrl = null;
       if (img) imgUrl = `${img.path}/portrait_incredible.${img.extension}`;
@@ -57,8 +58,8 @@ class MarvelService {
         url: issue.urls[0].url,
         description: issue.description,
         pubYear,
-        pubDate,
         pubCode,
+        pubDate,
         image: imgUrl,
       };
     });
@@ -67,7 +68,7 @@ class MarvelService {
   }
 
   filterResults(date1, date2, toBeFiltered) {
-    const results = toBeFiltered.filter(issue => issue.pubDate >= date1 && issue.pubDate <= date2);
+    const results = toBeFiltered.filter(issue => issue.pubCode >= date1 && issue.pubCode <= date2);
     return results;
   }
 }

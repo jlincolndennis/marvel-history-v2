@@ -4,7 +4,7 @@ function comicPreviewDirective() {
   return {
     restrict: 'E',
     scope: {
-      issue: '='
+      issue: '=',
     },
     template,
     controller: ComicPreviewController,
