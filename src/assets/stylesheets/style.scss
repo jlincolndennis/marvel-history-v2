@@ -1,7 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
-
-$marvelRed: rgb(232, 33, 38);
+@import 'components/title-bar';
 
 body {
-  background-color: $marvelRed;
+  background-color: white;
 }
